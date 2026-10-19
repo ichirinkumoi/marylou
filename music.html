@@ -14,6 +14,11 @@
         <button class="control-btn" id="restartBtn">restart</button>
         <button class="control-btn" id="rewindBtn">&lt;&lt; 10s</button>
         <button class="control-btn" id="forwardBtn">&gt;&gt; 10s</button>
+
+		<div class="volume-container">
+            <span id="volumeIcon">🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5">
+        </div>
     </div>
 
     <audio id="music"></audio>
@@ -424,7 +429,7 @@
 		</table>
 	</div>
 
-    <script>
+     <script>
         const music = document.getElementById("music");
         const trackDisplay = document.getElementById("currentTrackDisplay");
         const pauseBtn = document.getElementById("pauseBtn");
@@ -432,8 +437,13 @@
         const restartBtn = document.getElementById("restartBtn");
         const rewindBtn = document.getElementById("rewindBtn");
         const forwardBtn = document.getElementById("forwardBtn");
+        
+        // Volume element selectors
+        const volumeSlider = document.getElementById("volumeSlider");
+        const volumeIcon = document.getElementById("volumeIcon");
 
 		music.loop = true;
+        music.volume = volumeSlider.value;
 
         function updateUI() {
             if (!music.src) {
@@ -477,6 +487,18 @@
             }
         });
 
+        volumeSlider.addEventListener("input", function() {
+            music.volume = this.value;
+            
+            if (parseFloat(this.value) === 0) {
+                volumeIcon.textContent = "🔇";
+            } else if (parseFloat(this.value) < 0.4) {
+                volumeIcon.textContent = "🔈";
+            } else {
+                volumeIcon.textContent = "🔊";
+            }
+        });
+
         const tracks = document.querySelectorAll(".playlist-track");
         tracks.forEach(track => {
             track.addEventListener("click", function(e) {
@@ -505,6 +527,5 @@
             if (music.src) music.currentTime = Math.min(music.duration, music.currentTime + 10);
         });
     </script>
-
 </body>
 </html>

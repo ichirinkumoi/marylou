@@ -230,7 +230,7 @@
         </aside>
     </div>
 
-    <script>
+        <script>
         const gridContainer = document.getElementById('grid-container');
         const items = document.querySelectorAll('.grid-item');
         const pImgBox = document.getElementById('preview-img-box');
@@ -254,6 +254,7 @@
 
             pImg.src = target.querySelector('img').src;
             pTitle.textContent = target.getAttribute('data-title');
+            pTitle.style.color = '#000000'; 
         }
 
         function renderDefaultState() {
@@ -262,18 +263,22 @@
             const oldDesc = document.getElementById('preview-desc');
             const newPara = document.createElement('p');
             newPara.id = 'preview-desc';
-            newPara.textContent = 'these are my drawings';
+            newPara.textContent = 'Hover or click an image to view details.';
             
             pTextContainer.replaceChild(newPara, oldDesc);
 
             pImg.src = "";
-            pTitle.innerHTML = '<span style="color: #ff9d00;">mary</span><span style="color: #0089ff;">lou</span>';
-            pTitle.style.color = '';
+            pTitle.innerHTML = '<span style="color: red;">No </span><span style="color: blue;">selection made</span>';
+            pTitle.style.color = ''; 
         }
+
+        const isMobile = window.matchMedia("(max-width: 600px)");
 
         items.forEach(item => {
             item.addEventListener('mouseenter', () => {
-                renderDetails(item);
+                if (!isMobile.matches) {
+                    renderDetails(item);
+                }
             });
 
             item.addEventListener('click', () => {
@@ -285,12 +290,15 @@
         });
 
         gridContainer.addEventListener('mouseleave', () => {
-            if (clickedItem) {
-                renderDetails(clickedItem);
-            } else {
-                renderDefaultState();
+            if (!isMobile.matches) {
+                if (clickedItem) {
+                    renderDetails(clickedItem);
+                } else {
+                    renderDefaultState();
+                }
             }
         });
     </script>
+
 </body>
 </html>

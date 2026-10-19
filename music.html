@@ -13,8 +13,8 @@
         <button class="control-btn" id="pauseBtn" disabled>pause</button>
 		<button class="control-btn active" id="loopBtn" disabled>looping</button>
         <button class="control-btn" id="restartBtn">restart</button>
-        <button class="control-btn" id="rewindBtn"><< 10s</button>
-        <button class="control-btn" id="forwardBtn">>> 10s</button>
+        <button class="control-btn" id="rewindBtn">&lt;&lt; 10s</button>
+        <button class="control-btn" id="forwardBtn">&gt;&gt; 10s</button>
     </div>
 
     <audio id="music"></audio>
@@ -439,12 +439,16 @@
             if (!music.src) {
                 pauseBtn.textContent = "pause";
                 pauseBtn.disabled = true;
-            } else if (music.paused) {
-                pauseBtn.textContent = "resume";
-                pauseBtn.disabled = false;
+                loopBtn.disabled = true;
             } else {
-                pauseBtn.textContent = "pause";
-                pauseBtn.disabled = false;
+                loopBtn.disabled = false;
+                if (music.paused) {
+                    pauseBtn.textContent = "resume";
+                    pauseBtn.disabled = false;
+                } else {
+                    pauseBtn.textContent = "pause";
+                    pauseBtn.disabled = false;
+                }
             }
         }
 

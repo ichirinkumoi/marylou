@@ -11,6 +11,7 @@
 
     <div class="controls-container">
         <button class="control-btn" id="pauseBtn" disabled>pause</button>
+		<button class="control-btn active" id="loopBtn" disabled>looping</button>
         <button class="control-btn" id="restartBtn">restart</button>
         <button class="control-btn" id="rewindBtn"><< 10s</button>
         <button class="control-btn" id="forwardBtn">>> 10s</button>
@@ -426,11 +427,13 @@
     <script>
         const music = document.getElementById("music");
         const trackDisplay = document.getElementById("currentTrackDisplay");
-        
         const pauseBtn = document.getElementById("pauseBtn");
+		const loopBtn = document.getElementById("loopBtn");
         const restartBtn = document.getElementById("restartBtn");
         const rewindBtn = document.getElementById("rewindBtn");
         const forwardBtn = document.getElementById("forwardBtn");
+
+		music.loop = true;
 
         function updateUI() {
             if (!music.src) {
@@ -454,6 +457,20 @@
                 music.pause();
             }
             updateUI();
+        });
+
+		loopBtn.addEventListener("click", function() {
+            if (!music.src) return;
+
+            if (music.loop) {
+                music.loop = false;
+                loopBtn.textContent = "➡️ Play Once";
+                loopBtn.classList.remove("active");
+            } else {
+                music.loop = true;
+                loopBtn.textContent = "🔁 Loop: ON";
+                loopBtn.classList.add("active");
+            }
         });
 
         const tracks = document.querySelectorAll(".playlist-track");

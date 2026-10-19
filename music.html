@@ -464,11 +464,11 @@
 
             if (music.loop) {
                 music.loop = false;
-                loopBtn.textContent = "➡️ Play Once";
+                loopBtn.textContent = "not looping";
                 loopBtn.classList.remove("active");
             } else {
                 music.loop = true;
-                loopBtn.textContent = "🔁 Loop: ON";
+                loopBtn.textContent = "looping";
                 loopBtn.classList.add("active");
             }
         });
